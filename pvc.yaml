@@ -1,9 +1,9 @@
-kind: StorageClass
-apiVersion: storage.k8s.io/v1
-metadata:
-  name: mssql-storage
-provisioner: kubernetes.io/no-provisioner
-volumeBindingMode: WaitForFirstConsumer
+# kind: StorageClass
+# apiVersion: storage.k8s.io/v1
+# metadata:
+#   name: mssql-storage
+# provisioner: kubernetes.io/no-provisioner
+# volumeBindingMode: WaitForFirstConsumer
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -16,13 +16,11 @@ spec:
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: slow
-  mountOptions:
-    - hard
-    - nfsvers=4.1
-  nfs:
-    path: /tmp
-    server: 172.17.0.2
+  hostPath:
+    path: /home/chen2584
+  claimRef:
+    name: mssql-pvc
+    namespace: default
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -32,6 +30,6 @@ spec:
   resources:
     requests:
       storage: 10Gi
-  volumeMode: Filesystem
+  # volumeName: mssql-pv
   accessModes:
     - ReadWriteOnce
