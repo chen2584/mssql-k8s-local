@@ -17,7 +17,7 @@ spec:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   hostPath:
-    path: /home/chen2584
+    path: /var/lib/docker/volumes
   claimRef:
     name: mssql-pvc
     namespace: default
